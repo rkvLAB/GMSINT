@@ -45,7 +45,7 @@ def Jacobian(fun, x, *args, epsilon=1e-8, **kwargs):
     # variar um pouco o valor de epsilon, caso a diferença fique dentro de rtol, manter, senão, usar epsilon menor
     n_variables = len(x)
     dim_image = len(fun(x, *args, **kwargs))
-    Jacobian = np.zeros((dim_image, n_variables))
+    J = np.zeros((dim_image, n_variables))
     for i in range(n_variables):
         x0_pos = x.copy()
         x0_neg = x.copy()
@@ -53,6 +53,6 @@ def Jacobian(fun, x, *args, epsilon=1e-8, **kwargs):
         x0_pos[i] = x[i] + epsilon
         x0_neg[i] = x[i] - epsilon
 
-        Jacobian[:, i] = (fun(x0_pos, *args, **kwargs) - fun(x0_neg, *args, **kwargs)) / (2 * epsilon)
+        J[:, i] = (fun(x0_pos, *args, **kwargs) - fun(x0_neg, *args, **kwargs)) / (2 * epsilon)
 
-    return Jacobian
+    return J
